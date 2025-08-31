@@ -1,38 +1,64 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SISMED Perobal v4.0</title>
-    <meta name="description" content="Sistema de Saúde Municipal - Perobal v4.0" />
-    <meta name="author" content="SISMED" />
-
-    <meta property="og:title" content="SISMED Perobal v4.0" />
-    <meta property="og:description" content="Sistema de Saúde Municipal - Perobal v4.0" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <title>SISMED Perobal</title>
+    <style>
+      /* Estilos da tela de carregamento */
+      #loader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        color: #f1f5f9;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        transition: opacity 0.5s ease-out;
+      }
+      .loader-container { text-align: center; max-width: 800px; width: 100%; }
+      .loader-logo h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 40px; background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+      .loader-progress-bar-container { width: 100%; height: 10px; background-color: #1e293b; border-radius: 5px; margin: 20px 0; overflow: hidden; }
+      .loader-progress-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #38bdf8 0%, #0ea5e9 100%); border-radius: 5px; transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1); }
+      .loader-text { font-size: 1.1rem; margin-top: 10px; min-height: 25px; }
+    </style>
   </head>
-
   <body>
-    <!-- Tela de Carregamento (Loading Overlay) -->
-    <div id="loading-overlay" class="fixed inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-50">
-      <div class="text-center">
-        <svg class="mx-auto h-12 w-12 text-cyan-600 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-        <p class="mt-4 text-lg font-medium text-slate-700">Inicializando SISMED PEROBAL v4.0...</p>
-        <p class="mt-2 text-sm text-slate-500">Carregando base de dados e configurações...</p>
+    <div id="loader">
+      <div class="loader-container">
+        <div class="loader-logo"><h1>SISMED Perobal</h1></div>
+        <p class="loader-text">Inicializando módulos...</p>
+        <div class="loader-progress-bar-container"><div class="loader-progress-bar"></div></div>
+        <p class="loader-status">0% concluído</p>
       </div>
     </div>
-
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script src="/public/assets/js/app.js"></script>
+    
+    <script>
+      const loadingTexts = ["Carregando base de dados...","Verificando atualizações...","Preparando interface do usuário...","Carregando módulo de receitas...","Quase pronto...","Sistema pronto! Iniciando..."];
+      let currentIndex = 0;
+      const textElement = document.querySelector('.loader-text');
+      const progressElement = document.querySelector('.loader-progress-bar');
+      const statusElement = document.querySelector('.loader-status');
+      function updateLoading() {
+        const currentWidth = parseInt(progressElement.style.width || "0%");
+        if (currentWidth >= 100) return;
+        textElement.textContent = loadingTexts[currentIndex];
+        const newWidth = Math.min(100, currentWidth + 17);
+        progressElement.style.width = `${newWidth}%`;
+        statusElement.textContent = `${newWidth}% concluído`;
+        currentIndex = (currentIndex + 1) % loadingTexts.length;
+        if (newWidth < 100) { setTimeout(updateLoading, 800); }
+      }
+      updateLoading();
+    </script>
   </body>
 </html>

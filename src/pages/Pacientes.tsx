@@ -4,7 +4,6 @@ import { Plus, Search, Edit, Trash2, User, ChevronLeft, ChevronRight } from 'luc
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
@@ -137,14 +136,12 @@ const Pacientes = () => {
 
   return (
     <Layout>
-      <div className="space-y-6 animate-fade-in">
+      <div className="space-y-6 fade-in">
         {/* Page Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">
-              Gestão de Pacientes
-            </h1>
-            <p className="text-muted-foreground mt-1">
+            <h1 className="text-3xl font-bold text-dark">Gestão de Pacientes</h1>
+            <p className="text-gray-600 mt-1">
               Cadastre e gerencie os pacientes do sistema
             </p>
           </div>
@@ -152,7 +149,7 @@ const Pacientes = () => {
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button 
-                className="btn-medical-success"
+                className="btn-modern"
                 onClick={resetForm}
               >
                 <Plus className="h-4 w-4 mr-2" />
@@ -161,41 +158,41 @@ const Pacientes = () => {
             </DialogTrigger>
             <DialogContent className="max-w-2xl">
               <DialogHeader>
-                <DialogTitle className="text-foreground">
+                <DialogTitle className="text-dark">
                   {editingPatient ? 'Editar Paciente' : 'Novo Paciente'}
                 </DialogTitle>
               </DialogHeader>
               
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="medical-form-group">
-                  <Label className="medical-form-label">Nome Completo *</Label>
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-gray-700">Nome Completo *</Label>
                   <Input
                     value={formData.name}
                     onChange={handleNameChange}
-                    className="border-2 border-medical-warning"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                     required
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="medical-form-group">
-                    <Label className="medical-form-label">Data de Nascimento *</Label>
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">Data de Nascimento *</Label>
                     <Input
                       type="date"
                       value={formData.birthDate}
                       onChange={(e) => setFormData({...formData, birthDate: e.target.value})}
-                      className="border-2 border-medical-warning"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                       required
                     />
                   </div>
                   
-                  <div className="medical-form-group">
-                    <Label className="medical-form-label">CNS (15 dígitos) *</Label>
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">CNS (15 dígitos) *</Label>
                     <Input
                       value={formatCNS(formData.cns)}
                       onChange={(e) => setFormData({...formData, cns: e.target.value.replace(/\D/g, '')})}
                       placeholder="000 0000 0000 0000"
-                      className="border-2 border-medical-warning"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                       maxLength={19}
                       required
                     />
@@ -203,23 +200,23 @@ const Pacientes = () => {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="medical-form-group">
-                    <Label className="medical-form-label">Telefone</Label>
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">Telefone</Label>
                     <Input
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
                       placeholder="(00) 00000-0000"
-                      className="border-2 border-medical-warning"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                     />
                   </div>
                   
-                  <div className="medical-form-group">
-                    <Label className="medical-form-label">Endereço</Label>
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">Endereço</Label>
                     <Input
                       value={formData.address}
                       onChange={(e) => setFormData({...formData, address: e.target.value})}
                       placeholder="Rua, número, complemento"
-                      className="border-2 border-medical-warning"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                     />
                   </div>
                 </div>
@@ -232,7 +229,7 @@ const Pacientes = () => {
                   >
                     Cancelar
                   </Button>
-                  <Button type="submit" className="btn-medical-primary">
+                  <Button type="submit" className="btn-modern">
                     {editingPatient ? 'Atualizar' : 'Cadastrar'}
                   </Button>
                 </div>
@@ -242,105 +239,102 @@ const Pacientes = () => {
         </div>
 
         {/* Search */}
-        <Card className="medical-card">
-          <CardContent className="p-6">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-              <Input
-                placeholder="Buscar por nome ou CNS..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 border-2 border-medical-warning"
-              />
-            </div>
-          </CardContent>
-        </Card>
+        <div className="glass-panel">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 h-4 w-4" />
+            <Input
+              placeholder="Buscar por nome ou CNS..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+            />
+          </div>
+        </div>
 
         {/* Patients Table */}
-        <Card className="medical-card">
-          <CardHeader className="medical-card-header">
-            <CardTitle className="flex items-center gap-2">
-              <User className="h-5 w-5 text-medical-primary" />
+        <div className="glass-panel">
+          <div className="flex items-center gap-2 mb-6">
+            <User className="h-5 w-5 text-primary" />
+            <h2 className="text-xl font-semibold text-dark">
               Pacientes Cadastrados ({filteredPatients.length})
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto">
-              <table className="medical-table">
-                <thead>
-                  <tr>
-                    <th>Nome</th>
-                    <th>CNS</th>
-                    <th>Idade</th>
-                    <th>Telefone</th>
-                    <th>Endereço</th>
-                    <th>Ações</th>
+            </h2>
+          </div>
+          
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
+              <thead>
+                <tr className="bg-white/50">
+                  <th className="bg-gray-50 px-4 py-3 text-left text-sm font-semibold text-dark border-b border-gray-200">Nome</th>
+                  <th className="bg-gray-50 px-4 py-3 text-left text-sm font-semibold text-dark border-b border-gray-200">CNS</th>
+                  <th className="bg-gray-50 px-4 py-3 text-left text-sm font-semibold text-dark border-b border-gray-200">Idade</th>
+                  <th className="bg-gray-50 px-4 py-3 text-left text-sm font-semibold text-dark border-b border-gray-200">Telefone</th>
+                  <th className="bg-gray-50 px-4 py-3 text-left text-sm font-semibold text-dark border-b border-gray-200">Endereço</th>
+                  <th className="bg-gray-50 px-4 py-3 text-left text-sm font-semibold text-dark border-b border-gray-200">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginatedPatients.map((patient) => (
+                  <tr key={patient.id} className="hover:bg-primary/10 transition-colors duration-200 cursor-pointer">
+                    <td className="px-4 py-3 text-sm border-b border-gray-100 font-medium text-dark">{patient.name}</td>
+                    <td className="px-4 py-3 text-sm border-b border-gray-100 font-mono">{formatCNS(patient.cns)}</td>
+                    <td className="px-4 py-3 text-sm border-b border-gray-100">{calculateAge(patient.birthDate)} anos</td>
+                    <td className="px-4 py-3 text-sm border-b border-gray-100">{patient.phone || '-'}</td>
+                    <td className="px-4 py-3 text-sm border-b border-gray-100">{patient.address || '-'}</td>
+                    <td className="px-4 py-3 text-sm border-b border-gray-100">
+                      <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleEdit(patient)}
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleDelete(patient.id)}
+                          className="text-red-600 hover:text-red-700"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {paginatedPatients.map((patient) => (
-                    <tr key={patient.id}>
-                      <td className="font-medium text-foreground">{patient.name}</td>
-                      <td className="font-mono">{formatCNS(patient.cns)}</td>
-                      <td>{calculateAge(patient.birthDate)} anos</td>
-                      <td>{patient.phone || '-'}</td>
-                      <td>{patient.address || '-'}</td>
-                      <td>
-                        <div className="flex gap-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleEdit(patient)}
-                          >
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleDelete(patient.id)}
-                            className="text-medical-danger hover:text-medical-danger"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-            {/* Pagination */}
-            {totalPages > 1 && (
-              <div className="flex items-center justify-between mt-4">
-                <div className="text-sm text-muted-foreground">
-                  Mostrando {startIndex + 1} a {Math.min(startIndex + ITEMS_PER_PAGE, filteredPatients.length)} de {filteredPatients.length} pacientes
-                </div>
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                    disabled={currentPage === 1}
-                  >
-                    <ChevronLeft className="h-4 w-4" />
-                  </Button>
-                  <span className="text-sm font-medium">
-                    Página {currentPage} de {totalPages}
-                  </span>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                    disabled={currentPage === totalPages}
-                  >
-                    <ChevronRight className="h-4 w-4" />
-                  </Button>
-                </div>
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between mt-4">
+              <div className="text-sm text-gray-600">
+                Mostrando {startIndex + 1} a {Math.min(startIndex + ITEMS_PER_PAGE, filteredPatients.length)} de {filteredPatients.length} pacientes
               </div>
-            )}
-          </CardContent>
-        </Card>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+                <span className="text-sm font-medium">
+                  Página {currentPage} de {totalPages}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </Layout>
   );
