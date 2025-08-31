@@ -6,19 +6,18 @@ import Identificacao from '@/pages/Identificacao';
 import Pacientes from '@/pages/Pacientes';
 import Medicamentos from '@/pages/Medicamentos';
 import Receitas from '@/pages/Receitas';
-import Configuracoes from '@/pages/Configuracoes';
+import ConfiguracoesDesktop from '@/pages/ConfiguracoesDesktop';
 import NotFound from '@/pages/NotFound';
 import { Toaster } from 'sonner';
 import Atestados from '@/pages/Atestados';
 import Comparecimentos from '@/pages/Comparecimentos';
 
 const AppRoutes = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false); // Removido loading
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    // Verificar se o profissional está logado (pode usar sessionStorage ou localStorage)
     const loggedIn = sessionStorage.getItem('sismed-current-professional');
 
     if (!loggedIn && location.pathname !== '/identificacao') {
@@ -30,12 +29,8 @@ const AppRoutes = () => {
     setIsLoading(false);
   }, [navigate, location]);
 
-  if (isLoading) {
-    return <div>Carregando...</div>;
-  }
-
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-50">
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/identificacao" element={<Identificacao />} />
@@ -44,13 +39,12 @@ const AppRoutes = () => {
         <Route path="/receitas" element={<Receitas />} />
         <Route path="/atestados" element={<Atestados />} />
         <Route path="/comparecimentos" element={<Comparecimentos />} />
-        <Route path="/configuracoes" element={<Configuracoes />} />
+        <Route path="/configuracoes" element={<ConfiguracoesDesktop />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Toaster />
+      <Toaster position="top-right" />
     </div>
   );
 };
 
 export default AppRoutes;
-

@@ -1,0 +1,8 @@
+
+{
+  "tauri:dev": "tauri dev",
+  "tauri:build": "tauri build",
+  "tauri:init": "tauri init",
+  "build:desktop": "node scripts/build-desktop.js",
+  "dev:desktop": "npm run tauri:dev"
+}
